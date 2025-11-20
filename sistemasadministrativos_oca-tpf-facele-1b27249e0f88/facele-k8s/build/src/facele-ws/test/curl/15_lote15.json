@@ -1,0 +1,25 @@
+{
+    "comprobantes": [
+        {
+            "idDocumentoFE": 14,
+            "idPtoVta": 9,
+            "cbteTipo": 19,
+            "concepto": 1,
+            "docTipo": 99,
+            "cbteFch": "2025-08-29 00:00:00",
+            "codCondIva": 1,
+            "comprobantesDet": [{
+                    "descripcion": "CAÑO ESTRUC. RECTANG. 60X40",
+                    "precioUnitario": 125.00
+                }, {
+                    "descripcion": "Ho. Angulo 1 1/4\"",
+                    "precioUnitario": 250.00
+                }],
+            "comprobantesIva": null,
+            "comprobantesOpc": null,
+            "comprobantesTrib": null,
+            "comprobantesAsoc": null,
+            "comprobantesPermisos": null
+        }
+    ]
+}

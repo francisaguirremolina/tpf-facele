@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:cc="jakarta.faces.composite"
+                xmlns:p="primefaces"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets"
+                >
+    <p:tab title="Tablas de referencia (nacional)">
+        <p:panelGrid columns="2" columnClasses="column-label, column-actions">
+            <f:facet name="header">
+                <h:outputText value="Tablas de referencia (nacional)" class="section-title"/>
+            </f:facet>
+
+            <h:outputText value="Tipos de comprobantes (todos):"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/cbtetipos"
+                        />
+                &nbsp;
+                <p:link value="Reimportar" href="resources/cbtetipos/import"/>
+                <br/>
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:selectOneMenu value="#{app.cbteTipo}"
+                                 filter="true" filterMatchMode="contains"
+                                 required="true" requiredMessage="requerido">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cbteTipos}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToCbteTipo()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Conceptos:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/conceptos" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/conceptos/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToConcepto()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Monedas (todas):"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/monedas" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/monedas/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. moneda:"/>
+                <p:selectOneMenu value="#{app.codMoneda}" 
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido"> 
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.monedas}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToMoneda()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Cotización de monedas:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/cotizmonedas" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. moneda:"/>
+                &nbsp;
+                <p:selectOneMenu value="#{app.codMoneda}" 
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido"> 
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.monedas}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value="Fecha cotiz:"/>
+                &nbsp;
+                <p:datePicker value="#{app.fecha}" size="10" pattern="dd/MM/yyyy" 
+                              showIcon="true" showOnFocus="false" mask="true" 
+                              required="true" requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver cotiz." target="_blank" 
+                               action="#{app.linkToCotizMoneda()}" 
+                               update="@form"/>
+
+            </h:form>
+
+            <h:outputText value="Tipos de docs. identidad:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/doctipos" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/doctipos/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToDocTipo()}" 
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Al&iacute;cuotas de IVA:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/ivatipos" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/ivatipos/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToIvaTipo()}" 
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Tipos de datos opc. (todos):"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/opcionalestipos" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/opcionalestipos/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToOpcionalTipo()}" 
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Otros tributos:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/tributostipos" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/tributostipos/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToTributoTipo()}" 
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="IVA de receptores:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/ivareceptores" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/ivareceptores/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToIvaReceptor()}" 
+                               update="@form"/>
+
+            </h:form>
+
+            <h:outputText value="Pa&iacute;ses:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/paises" target="_blank"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/paises/import" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToPais()}" 
+                               update="@form"/>
+            </h:form>
+
+        </p:panelGrid>
+    </p:tab>
+
+</ui:composition>

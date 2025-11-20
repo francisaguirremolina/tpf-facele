@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:cc="jakarta.faces.composite"
+                xmlns:p="primefaces"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <p:tab title="Servicios">
+        <p:panelGrid columns="2"  columnClasses="column-label, column-actions">
+            <f:facet name="header">
+                <h:outputText value="Servicios" class="section-title"/>
+            </f:facet>
+
+            <h:outputText value="Estado de servidores WSFE:"/>
+            <p:link value="Consultar" href="resources/dummy" target="_blank"/>
+
+            <h:outputText value="Estado de servidores WSFEX:"/>
+            <p:link value="Consultar" href="resources/dummyfex" target="_blank"/>
+
+            <h:outputText value="Estado de servidores WSCDC:"/>
+            <p:link value="Consultar" href="resources/dummycdc" target="_blank"/>
+
+            <h:outputText value="Colas:"/>
+            <h:panelGroup layout="block">
+                <p:link value="Consultar" href="resources/colas" target="_blank"/>
+                &nbsp;
+                <p:link value="Pausar QW" href="resources/colas/qw/pause" target="_blank"/>
+                &nbsp;
+                <p:link value="Reanudar QW" href="resources/colas/qw/resume" target="_blank"/>
+                &nbsp;
+                <p:link value="Pausar QP" href="resources/colas/qp/pause" target="_blank"/>
+                &nbsp;
+                <p:link value="Reanudar QP" href="resources/colas/qp/resume" target="_blank"/>
+            </h:panelGroup>
+            
+            <h:outputText value="Log de Glassfish:"/>
+            <p:link value="Consultar" href="resources/status/gflog" target="_blank"/>
+
+            <h:outputText value="Log de FacEle:"/>
+            <p:link value="Consultar" href="resources/status/facelelog" target="_blank"/>
+
+            <h:outputText value="Obtención de un ticket:"/>
+            <h:form class="parcial-form" target="_blank">
+                <h:outputText value="CUIT: "/>
+
+                <p:selectOneMenu value="#{app.cuit}" 
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido"> 
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cuits}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:selectOneMenu value="#{app.wsName}">
+                    <f:selectItem itemLabel="wsfe" itemValue="wsfe"/>
+                    <f:selectItem itemLabel="wsfex" itemValue="wsfex"/>
+                    <f:selectItem itemLabel="wscdc" itemValue="wscdc"/>
+                </p:selectOneMenu>
+                &nbsp;
+                <p:commandLink value="Reutilizar" target="_blank"
+                               action="#{app.linkToTicket()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Forzar nuevo" target="_blank"
+                               action="#{app.linkToNewTicket()}"
+                               update="@form"/>
+            </h:form>
+
+        </p:panelGrid>
+    </p:tab>
+
+</ui:composition>

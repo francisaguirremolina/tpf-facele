@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacEle-sub-otros" pageWidth="288" pageHeight="802" columnWidth="288" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="51516ad8-da73-4b8b-a0c8-6024f703aba0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="3.2210200000000033"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="dbname" value="guia"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="IdDocumentoFE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["204"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT	t.*,
+	tt.Descripcion AS DescTributo
+FROM facele.t_FEComprobantesTrib t
+INNER JOIN facele.t_FETributosTipos tt USING (CodTributo)
+WHERE t.IdDocumentoFE::TEXT=$P{IdDocumentoFE}]]>
+	</queryString>
+	<field name="idcomprobtrib" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Código interno de tributo de un comprobante electrónico]]></fieldDescription>
+	</field>
+	<field name="iddocumentofe" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Código interno de comprobante]]></fieldDescription>
+	</field>
+	<field name="codtributo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Código de tributo (según el método FEParamGetTiposTributos)]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción del tributo]]></fieldDescription>
+	</field>
+	<field name="baseimp" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Base imponible para la determinación del tributo]]></fieldDescription>
+	</field>
+	<field name="alic" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Valor numérico (no monetario) de la alícuota]]></fieldDescription>
+	</field>
+	<field name="importe" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Importe del tributo]]></fieldDescription>
+	</field>
+	<field name="desctributo" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="22">
+			<staticText>
+				<reportElement mode="Transparent" x="197" y="12" width="30" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="f43513ea-90e1-424a-905b-b0c99c822df7"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ALÍC. (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="228" y="12" width="60" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="5fce07a0-9614-4513-84ca-6d1f4c871d54"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[IMPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="135" y="12" width="60" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="c7085e92-ee6e-4a16-94bf-460080b3c0b6"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[BASE IMP.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="12" width="130" height="10" forecolor="#000000" backcolor="#FFFFFF" uuid="63e2f309-9f1e-4923-bb38-88e30f017923"/>
+				<textElement verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[IMPUESTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="288" height="11" forecolor="#000000" backcolor="#FFFFFF" uuid="eb09a174-b3c8-4ba4-b1f6-4b0b9f66349c"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[OTROS TRIBUTOS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="13">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="1" width="130" height="10" uuid="c6065fe1-7b11-42b8-a597-bf2f04d8f382"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion} + " (" + $F{desctributo} + ")"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="135" y="1" width="60" height="10" uuid="77c15b8c-bbb9-413f-a0de-9bcfa4d555ff"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{baseimp}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="197" y="1" width="30" height="10" uuid="84b6e5b9-34d8-4e64-8770-5d820600dc1b"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alic}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="228" y="1" width="60" height="10" uuid="db605b75-81fb-4dbe-9679-f86ae0580831"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

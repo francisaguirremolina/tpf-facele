@@ -1,0 +1,49 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: facele-dev
+
+resources:
+  - ../../base
+
+namePrefix: dev-
+
+commonLabels:
+  environment: dev
+  app.kubernetes.io/instance: facele-dev
+
+patches:
+  - target:
+      kind: Deployment
+      name: facele-ws
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "512Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "500m"
+
+  - target:
+      kind: Service
+      name: facele-ws-service
+    patch: |-
+      - op: replace
+        path: /spec/type
+        value: NodePort
+      - op: replace
+        path: /spec/ports/0/nodePort
+        value: 30080
+      - op: replace
+        path: /spec/ports/1/nodePort
+        value: 30848
+
+configMapGenerator:
+  - name: dev-config
+    literals:
+      - DEBUG_LEVEL=1
+      - LOG_LEVEL=DEBUG

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacEle-generico-sub1" pageWidth="504" pageHeight="360" columnWidth="504" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bd90b99c-76af-48c8-9e3e-c640c7061a2c">
+	<property name="ireport.zoom" value="3.0789487093842545"/>
+	<property name="ireport.x" value="494"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IdDocumentoFE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["204"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="LineCount" class="java.lang.Long" isForPrompting="false">
+		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT det.*,
+'' AS Unidad,
+(det.Cantidad * det.PrecioUnitario * det.Bonificacion / 100.0)::Facele.Monto AS Descuento
+FROM facele.t_FEComprobantesDet det
+WHERE det.IdDocumentoFE::TEXT=$P{IdDocumentoFE}
+ORDER BY 1]]>
+	</queryString>
+	<field name="idcomprobantedet" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Código de detalle de comprobante]]></fieldDescription>
+	</field>
+	<field name="iddocumentofe" class="java.lang.Integer">
+		<fieldDescription><![CDATA[Código interno de comprobante]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Cantidad del producto del renglón]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[Descripción]]></fieldDescription>
+	</field>
+	<field name="preciounitario" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[En comprobantes A o M, es el precio unitario neto (sin IVA)
+En comprobantes B o C, es el precio unitario final (con IVA)
+
+En todos los casos, este precio no incluye aún el descuento por bonificación.]]></fieldDescription>
+	</field>
+	<field name="valor1" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Valor genérico 1 del renglón.
+Predeterminado para discriminar el IVA del producto.
+En los comprobantes A, valor de la alícuota de IVA
+(por ejemplo, "21").
+En los comprobantes B o C, es NULL.]]></fieldDescription>
+	</field>
+	<field name="valor2" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Valor genérico 2 del renglón.]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Depende funcionalmente de:
+ Cantidad * PrecioUnitario - dto. bonif.]]></fieldDescription>
+	</field>
+	<field name="lineadet1" class="java.lang.String"/>
+	<field name="lineadet2" class="java.lang.String"/>
+	<field name="codigoproducto" class="java.lang.String">
+		<fieldDescription><![CDATA[Código del producto, según el fabricante, el proveedor o la empresa.]]></fieldDescription>
+	</field>
+	<field name="bonificacion" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Porcentaje de bonificación del renglón, en la escala 0-100.
+Si es NULL, no hay bonificación.]]></fieldDescription>
+	</field>
+	<field name="unidad" class="java.lang.String"/>
+	<field name="descuento" class="java.math.BigDecimal"/>
+	<variable name="subtotal_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{subtotal}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="4" y="0" width="200" height="12" uuid="f21c8b0c-31c8-4d6e-af0c-fb701113e258"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[CONCEPTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="0" width="55" height="12" uuid="112d5cac-7de7-4223-b436-6478d96e784b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[IMPORTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="24" width="504" height="1" uuid="759271b4-f77b-4b73-96bd-627997ea7a43"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="366" y="28" width="53" height="12" uuid="341d011f-001c-4780-bbcf-7e0e50619a29">
+					<printWhenExpression><![CDATA[$V{subtotal_1} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="10" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Pág. anterior:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="28" width="80" height="12" uuid="60a0f31a-4aed-4d72-a780-fb8815143cf9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{subtotal_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="4" y="0" width="200" height="12" uuid="7439598f-f4ea-46fa-bae6-7bd046e7fdca"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="0" width="80" height="12" uuid="39911310-1849-465a-ab9c-f3071b26f667"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="3" y="12" width="240" height="1" uuid="f21b37fa-f338-4ce1-97c1-202cc426b59e"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="10" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lineadet1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="3" y="13" width="240" height="1" uuid="0c745930-9147-47fb-ab13-360a6c9a5a3d"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="10" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lineadet2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch">
+			<printWhenExpression><![CDATA[((long)$V{REPORT_COUNT})<((long)$P{LineCount})]]></printWhenExpression>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="422" y="2" width="80" height="12" uuid="6db5b8ea-fc09-4128-a79d-a3945078e43f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{subtotal_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="364" y="2" width="53" height="12" uuid="214b8f30-13ed-4ca6-b5f2-d8dfd7626f25">
+					<printWhenExpression><![CDATA[$V{subtotal_1} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="10" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

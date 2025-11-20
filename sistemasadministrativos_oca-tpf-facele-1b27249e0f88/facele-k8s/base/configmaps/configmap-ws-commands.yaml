@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ws-post-boot-commands
+data:
+  post-boot-commands.txt: |
+    change-admin-password --user admin tpf123
+    enable-secure-admin

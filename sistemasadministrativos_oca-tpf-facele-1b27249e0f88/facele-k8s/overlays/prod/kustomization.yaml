@@ -1,0 +1,51 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: facele-prod
+
+resources:
+  - ../../base
+
+namePrefix: prod-
+
+commonLabels:
+  environment: prod
+  app.kubernetes.io/instance: facele-prod
+
+patches:
+  - target:
+      kind: Deployment
+      name: facele-ws
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "2Gi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "1000m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "4Gi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "2000m"
+
+  - target:
+      kind: Service
+      name: facele-ws-service
+    patch: |-
+      - op: replace
+        path: /spec/type
+        value: LoadBalancer
+
+configMapGenerator:
+  - name: prod-config
+    literals:
+      - DEBUG_LEVEL=0
+      - LOG_LEVEL=INFO
+      - WSAA_ENDPOINT=https://wsaa.afip.gov.ar/ws/services/LoginCms
+      - WSFE_ENDPOINT=https://servicios1.afip.gov.ar/wsfev1/service.asmx

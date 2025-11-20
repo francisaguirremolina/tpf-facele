@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:cc="jakarta.faces.composite"
+                xmlns:p="primefaces"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+    <p:tab title="Configuraci&oacute;n del negocio">
+        <p:panelGrid columns="2"  columnClasses="column-label, column-actions">
+            <f:facet name="header">
+                <h:outputText value="Configuraci&oacute;n del negocio" class="section-title"/>
+            </f:facet>
+
+            <h:outputText value="Modelos de copias:"/>
+            <h:form class="parcial-form">
+                <p:link value="Ver datos" href="resources/modelocopias" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true"
+                                 requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToModeloCopia()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Cuits emisores:"/>
+            <h:form class="parcial-form">
+                <p:link value="Ver datos" href="resources/cuits" target="_blank"/>
+                &nbsp;
+                <h:outputText value="CUIT:"/>
+                <p:selectOneMenu value="#{app.cuit}"
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cuits}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToCuit()}"
+                               update="@form"/>
+                <br/>
+                <p:commandLink value="Consultar actividades" target="_blank"
+                               action="#{app.linkToActividades()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Consultar puntos de venta" target="_blank"
+                               action="#{app.linkToPuntosVenta()}"
+                               update="@form"/>
+                <br/>
+                <p:commandLink value="Consultar actividades (export)" target="_blank"
+                               action="#{app.linkToActividadesExp()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Consultar puntos de venta (export)" target="_blank"
+                               action="#{app.linkToPuntosVentaExp()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Puntos de venta:"/>
+            <h:form class="parcial-form">
+                <p:link value="Ver datos" href="resources/puntosventa" target="_blank"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true"
+                                 requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" target="_blank"
+                               action="#{app.linkToPuntoVenta()}"
+                               update="@form"/>
+            </h:form>
+
+        </p:panelGrid>
+    </p:tab>
+
+</ui:composition>

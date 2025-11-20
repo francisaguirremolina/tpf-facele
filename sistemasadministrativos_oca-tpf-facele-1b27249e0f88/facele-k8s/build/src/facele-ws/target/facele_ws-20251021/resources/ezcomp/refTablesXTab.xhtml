@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="primefaces"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+    <p:tab title="Tablas de referencia (exportaci&oacute;n)">
+        <p:panelGrid columns="2" columnClasses="column-label, column-actions">
+            <f:facet name="header">
+                <h:outputText value="Tablas de referencia (exportaci&oacute;n)" class="section-title"/>
+            </f:facet>
+
+            <h:outputText value="Monedas (solo exp.):"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexmonedas"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexmonedas/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:selectOneMenu value="#{app.codMoneda}" 
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido"> 
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.monedas}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXMonedas()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Tipos de comprobantes (solo exp.):"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexcbtetipos"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexcbtetipos/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.cbteTipo}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXCbteTipos()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Tipos de exportaciones:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fextiposexpo"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fextiposexpo/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.idFEXTipoExpo}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXTiposExpo()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Idiomas:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexidiomas"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexidiomas/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.idFEXIdioma}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXIdiomas()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Pa&iacute;ses de destino:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexdstpaises"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexdstpaises/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputText value="#{app.idFEXDstPais}" size="3" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXDstPaises()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Unidades de medida:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexunismedida"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexunismedida/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.idFEXUnidadMedida}" size="6" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXUnisMedida()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Incoterms"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexincoterms"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexincoterms/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputText value="#{app.idFEXIncoterm}" size="3" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXIncoterms()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="CUITs destinos:"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexdstcuits"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexdstcuits/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.cuit}" size="11" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXDstCuits()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Opcionales (solo exp.):"/>
+            <h:form class="parcial-form" target="_blank">
+                <p:link value="Ver datos" href="resources/fexopcionales"/>
+                &nbsp;
+                <p:link value="Reimportar" href="resources/fexopcionales/import"/>
+                &nbsp;
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputText value="#{app.codOpcional}" size="4" required="true" 
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro"
+                               action="#{app.linkToFEXOpcionales()}"
+                               update="@form"/>
+            </h:form>
+        </p:panelGrid>
+    </p:tab>
+
+</ui:composition>

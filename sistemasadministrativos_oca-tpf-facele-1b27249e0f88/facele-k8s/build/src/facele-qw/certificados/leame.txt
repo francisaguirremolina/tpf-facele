@@ -1,0 +1,26 @@
+MAIL del 2025-02-26
+
+Buenas Tardes
+
+
+
+Adjunto el certificado de testing(homologación)
+
+La clave es 1234
+
+Esta autorizado para WSFE y WSFEX
+
+El endpoint  está indicado en el manual del desarrollador https://www.afip.gob.ar/ws/WSFEV1/documentos/manual-desarrollador-COMPG-v3-4-2.pdf
+
+
+
+Saludos.
+
+
+Bag Attributes
+    localKeyID: 01 00 00 00
+subject=CN=ocaDesa, serialNumber=CUIT 20175468790
+issuer=CN=Computadores Test, O=AFIP, C=AR
+
+
+CUIT DE OCA LOG S.A.:  30717024393

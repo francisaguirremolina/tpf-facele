@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runtime-configmap
+data:
+  entrypoint.sh: |
+    #!/bin/bash
+
+      /opt/glassfish7/bin/asadmin start-domain
+      echo "AS_ADMIN_PASSWORD=" > /tmp/pass.txt
+      echo "AS_ADMIN_NEWPASSWORD=tpf123" >> /tmp/pass.txt
+      /opt/glassfish7/bin/asadmin --user admin --passwordfile /tmp/pass.txt change-admin-password 
+      echo "AS_ADMIN_PASSWORD=tpf123" > /tmp/pass.txt 
+      /opt/glassfish7/bin/asadmin --user admin --passwordfile /tmp/pass.txt enable-secure-admin 
+
+      echo "reiniciando domains"
+      /opt/glassfish7/bin/asadmin restart-domain 
+
+      /opt/glassfish7/bin/asadmin create-jdbc-connection-pool --user admin --passwordfile /tmp/pass.txt --driverclassname org.postgresql.Driver --restype java.sql.Driver --property 'user=sa:password=Free09:URL="jdbc:postgresql://facele-db:5432/facele_tpf"' FacEle_tpf
+
+      /opt/glassfish7/bin/asadmin create-jdbc-resource --user admin  --passwordfile /tmp/pass.txt --connectionpoolid FacEle_tpf jdbc/facele_tpf
+      tail -f /dev/null

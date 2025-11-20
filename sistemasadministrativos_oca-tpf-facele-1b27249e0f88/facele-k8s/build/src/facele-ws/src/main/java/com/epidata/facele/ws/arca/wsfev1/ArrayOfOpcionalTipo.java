@@ -1,0 +1,73 @@
+
+package com.epidata.facele.ws.arca.wsfev1;
+
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+
+/**
+ * <p>Java class for ArrayOfOpcionalTipo complex type.
+ * 
+ * <p>The following schema fragment specifies the expected content contained within this class.
+ * 
+ * <pre>
+ * &lt;complexType name="ArrayOfOpcionalTipo"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="OpcionalTipo" type="{http://ar.gov.afip.dif.FEV1/}OpcionalTipo" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
+ * </pre>
+ * 
+ * 
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "ArrayOfOpcionalTipo", propOrder = {
+    "opcionalTipo"
+})
+public class ArrayOfOpcionalTipo {
+
+    /**
+     *
+     */
+    @XmlElement(name = "OpcionalTipo", nillable = true)
+    protected List<OpcionalTipo> opcionalTipo;
+
+    /**
+     * Gets the value of the opcionalTipo property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the opcionalTipo property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getOpcionalTipo().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link OpcionalTipo }
+     * 
+     * 
+     * @return 
+     */
+    public List<OpcionalTipo> getOpcionalTipo() {
+        if (opcionalTipo == null) {
+            opcionalTipo = new ArrayList<OpcionalTipo>();
+        }
+        return this.opcionalTipo;
+    }
+
+}

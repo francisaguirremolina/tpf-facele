@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:cc="jakarta.faces.composite"
+                xmlns:p="primefaces"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <p:tab title="Configuraci&oacute;n">
+        <p:panelGrid columns="2"  columnClasses="column-label, column-actions">
+            <f:facet name="header">
+                <h:outputText value="Configuraci&oacute;n" class="section-title"/>
+            </f:facet>
+
+            <h:outputText value="Archivo de configuraci&oacute;n:"/>
+            <h:outputText value="#{app.conf.fullConfFileName}"/>
+
+            <h:outputText value="Endpoint WSAA:"/>
+            <h:outputText value="#{app.conf.WSAAEndpoint}"/>
+
+            <h:outputText value="Endpoint WSFE:"/>
+            <h:outputText value="#{app.conf.WSFEEndpoint}"/>
+
+            <h:outputText value="Endpoint WSFEX:"/>
+            <h:outputText value="#{app.conf.WSFEXEndpoint}"/>
+
+            <h:outputText value="Endpoint WSCDC:"/>
+            <h:outputText value="#{app.conf.WSCDCEndpoint}"/>
+
+            <h:outputText value="Archivo de registro:"/>
+            <h:outputText value="#{app.fullLogFileName}"/>
+
+            <h:outputText value="CUIT para operaciones generales:"/>
+            <h:outputText value="#{app.conf.genericCuit}"/>
+
+            <h:outputText value="Archivo de configuraci&oacute;n:"/>
+            <p:link value="Consultar" href="resources/status/config" target="_blank"/>
+
+        </p:panelGrid>
+
+    </p:tab>
+</ui:composition>

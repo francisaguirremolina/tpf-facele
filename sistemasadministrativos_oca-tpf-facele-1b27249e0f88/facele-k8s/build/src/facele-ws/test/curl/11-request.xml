@@ -1,0 +1,7 @@
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <wsc:ComprobanteDummy/>
+    </soapenv:Body>
+</soapenv:Envelope>

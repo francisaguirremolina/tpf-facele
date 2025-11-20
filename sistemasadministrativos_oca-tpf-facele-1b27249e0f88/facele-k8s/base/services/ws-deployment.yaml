@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: facele-ws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: facele-ws
+  template:
+    metadata:
+      labels:
+        app: facele-ws
+    spec:
+      containers:
+      - name: ws
+        image: facele-ws:latest
+        command: ["/bin/sh", "/app/scripts/entrypoint.sh"]
+        volumeMounts:
+          - name: config-volumen
+            mountPath: /opt/glassfish7/glassfish/domains/domain1/config/facele.properties
+            subPath: facele.properties
+          - name: ws-post-boot
+            mountPath: /opt/glassfish7/post-boot-commands.txt
+            subPath: post-boot-commands.txt
+          - name: runtime-volumen
+            mountPath: /app/scripts/entrypoint.sh
+            subPath: entrypoint.sh
+            readOnly: true
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 4848
+          name: admin
+        env:
+        - name: GLASSFISH_HOME
+          value: /opt/glassfish7
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "facele_tpf"
+        - name: DB_USER
+          value: "sa"
+        - name: DB_PASSWORD
+          value: "Free09"
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1000m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+      volumes:
+      - name: config-volumen
+        configMap:
+          name: facele-config
+      - name: runtime-volumen
+        configMap:
+           name: runtime-configmap
+           defaultMode: 0744 
+      - name: ws-post-boot
+        configMap:
+          name: ws-post-boot-commands
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: facele-ws-service
+spec:
+  selector:
+    app: facele-ws
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 30073
+  - name: admin
+    port: 4848
+    targetPort: 4848
+    nodePort: 31573
+  type: NodePort

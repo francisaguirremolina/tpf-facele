@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:cc="jakarta.faces.composite"
+                xmlns:p="primefaces"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+    <p:tab title="Comprobantes" id="tab_documentos">
+
+        <p:panelGrid columns="2"  columnClasses="column-label, column-actions">
+            <f:facet name="header" id="grd_documentos">
+                <h:outputText value="Comprobantes" class="section-title"/>
+            </f:facet>
+            <h:outputText value="Lista de comprobantes:"/>
+            <h:form class="parcial-form" target="_blank">
+                <h:outputText value="ID entre:"/>
+                <p:inputNumber value="#{app.idDesde}" size="6"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value=" y:"/>
+                <p:inputNumber value="#{app.idHasta}" size="6"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="CUIT:"/>
+                <p:selectOneMenu value="#{app.cuit}" 
+                                 filter="true" filterMatchMode="contains"> 
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cuits}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Punto de venta:"/>
+                <p:inputNumber value="#{app.ptoVta}" size="5"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Tipo de comprobante:"/>
+                <p:selectOneMenu value="#{app.cbteTipo}"
+                                 filter="true" filterMatchMode="contains">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cbteTipos}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Lote:"/>
+                <p:inputNumber value="#{app.idLote}" size="6"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value="Resultado:"/>
+                <p:selectOneMenu value="#{app.resultado}">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItem itemLabel="P: pendiente" itemValue="P"/>
+                    <f:selectItem itemLabel="A: aprobado" itemValue="A"/>
+                    <f:selectItem itemLabel="R: rechazado" itemValue="R"/>
+                    <f:selectItem itemLabel="T: err. t&eacute;c." itemValue="T"/>
+                    <f:selectItem itemLabel="S: simulac." itemValue="S"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Número cbte. entre:"/>
+                <p:inputNumber value="#{app.cbteNroDesde}" size="6"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value=" y:"/>
+                <p:inputNumber value="#{app.cbteNroHasta}" size="6"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Fecha entre:"/>
+                <p:datePicker value="#{app.fechaDesde}" size="10" pattern="dd/MM/yyyy" 
+                              showIcon="true" showOnFocus="false" mask="true" />
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value=" y:"/>
+                <p:datePicker value="#{app.fechaHasta}" size="10" pattern="dd/MM/yyyy" 
+                              showIcon="true" showOnFocus="false" mask="true" />
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registros"
+                               action="#{app.linkToBuscaComprobantes()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="Comprobante individual:"/>
+            <h:form class="parcial-form" target="_blank">
+                <h:outputText value="C&oacute;d. interno:"/>
+                <p:inputNumber value="#{app.id}" size="6" required="true"
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Ver registro" 
+                               action="#{app.linkToComprobante()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Ver PDF" action="#{app.linkToComprobantePDF()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Ver QR" action="#{app.linkToComprobanteQR()}"
+                               update="@form"/>
+            </h:form>
+
+            <h:outputText value="&Uacute;ltimo autorizado:"/>
+            <h:form class="parcial-form" target="_blank">
+                <h:outputText value="CUIT:"/>
+                <p:selectOneMenu value="#{app.cuit}" required="true"
+                                 requiredMessage="requerido"
+                                 filter="true" filterMatchMode="contains">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cuits}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous" />
+                &nbsp;
+                <h:outputText value="Punto de venta ARCA:"/>
+                <p:inputNumber value="#{app.ptoVta}" size="5" thousandSeparator=""
+                               required="true" requiredMessage="requerido"/>
+                <p:message for="@previous" />
+                <br/>
+                <h:outputText value="Tipo de comprobante ARCA:"/>
+                <p:selectOneMenu value="#{app.cbteTipo}" required="true"
+                                 requiredMessage="requerido"
+                                 filter="true" filterMatchMode="contains">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cbteTipos}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                <br/>
+                <p:commandLink value="Consultar (nac.)" 
+                               action="#{app.linkToUltimoAutorizado()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Consultar (export.)" 
+                               action="#{app.linkToFEXUltimoAutorizado()}"
+                               update="@form"/>
+            </h:form>
+            <h:outputText value="Recupera comprobante:"/>
+            <h:form class="parcial-form" target="_blank">
+                <h:outputText value="CUIT:"/>
+                <p:selectOneMenu value="#{app.cuit}"
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cuits}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value="Punto de venta ARCA:"/>
+                <p:inputNumber value="#{app.ptoVta}" size="5" thousandSeparator=""
+                               required="true"
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Tipo de comprobante ARCA:"/>
+                <p:selectOneMenu value="#{app.cbteTipo}"
+                                 filter="true" filterMatchMode="contains"
+                                 required="true"
+                                 requiredMessage="requerido">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cbteTipos}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="N&uacute;mero de comprobante:"/>
+                <p:inputNumber value="#{app.cbteNro}" size="8"
+                               required="true"
+                               requiredMessage="requerido"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <p:commandLink value="Consultar (nac.)" 
+                               action="#{app.linkToRecuperaComprobante()}"
+                               update="@form"/>
+                &nbsp;
+                <p:commandLink value="Consultar (export.)" 
+                               action="#{app.linkToFEXRecuperaComprobante()}"
+                               update="@form"/>
+            </h:form>
+            <h:outputText value="Constataci&oacute;n de comprobantes de terceros:"/>
+            <h:form class="parcial-form"  target="_blank">
+                <h:outputText value="CUIT emisor:"/>
+                <p:inputNumber value="#{app.cuit}" thousandSeparator="" size="11"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value="Modo emisi&oacute;n:"/>
+                <p:inputText value="#{app.modoEmision}" size="4"/>
+                <h:outputText value="(CAE/CAEA/CAI)"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Punto de venta:"/>
+                <p:inputNumber value="#{app.ptoVta}" size="5" thousandSeparator=""/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Tipo de comprobante:"/>
+                <p:selectOneMenu value="#{app.cbteTipo}"
+                                 filter="true" filterMatchMode="contains">
+                    <f:selectItem itemLabel="Seleccione..." itemValue=""/>                    
+                    <f:selectItems value="#{app.enums.cbteTipos}"/>
+                </p:selectOneMenu>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="N&uacute;mero:"/>
+                <p:inputNumber value="#{app.cbteNro}" size="8"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Fecha:"/>
+                <p:datePicker value="#{app.fecha}" size="10" pattern="dd/MM/yyyy" 
+                              showIcon="true" showOnFocus="false" mask="true" />
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value="Importe total:"/>
+                <p:inputNumber value="#{app.importe}" size="15" decimalPlaces="2"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="C&oacute;d. autorizaci&oacute;n:"/>
+                <p:inputText value="#{app.cae}" size="14"/>
+                <p:message for="@previous"/>
+                <br/>
+                <h:outputText value="Tipo doc. receptor:"/>
+                <p:inputNumber value="#{app.docTipo}" size="3"/>
+                <p:message for="@previous"/>
+                &nbsp;
+                <h:outputText value="Nro. doc:"/>
+                <p:inputNumber value="#{app.docNro}" thousandSeparator="" size="11"/>
+                <p:message for="@previous"/>
+                <br/>
+                <p:commandLink value="Constatar" 
+                               action="#{app.linkToCDC()}"
+                               update="@form"/>
+            </h:form>
+        </p:panelGrid>
+    </p:tab>
+
+</ui:composition>

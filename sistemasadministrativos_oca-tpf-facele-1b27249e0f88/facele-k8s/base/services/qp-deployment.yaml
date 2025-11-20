@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: facele-qp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: facele-qp
+  template:
+    metadata:
+      labels:
+        app: facele-qp
+    spec:
+      containers:
+      - name: qp
+        image: facele-qp:latest
+        volumeMounts:
+          - name: config-volumen
+            mountPath: /usr/src/app/facele.properties
+            subPath: facele.properties
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "facele_tpf"
+        - name: DB_USER
+          value: "sa"
+        - name: DB_PASSWORD
+          value: "Free09"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+      volumes:
+      - name: config-volumen
+        configMap:
+          name: facele-config
+      - name: pdfs-storage
+        emptyDir: {} 
+      - name: templates-storage
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: facele-qp-service
+spec:
+  selector:
+    app: facele-qp
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30081
+  type: NodePort

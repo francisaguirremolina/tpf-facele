@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="primefaces"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      >
+    <h:head>
+        <title>
+            FacEle - Servicio de facturaci&oacute;n electr&oacute;nica
+        </title>
+        <style>
+            .logo-column {
+                width: 100px;
+            }
+            .title-column {
+            }
+            .column-label {
+                width: 260px;
+            }
+            .column-actions {
+            }
+            .ui-panelgrid-header {
+                text-align: left!important ;
+            }
+            .section-title {
+                width: 300px;
+                text-align: left;
+                font-size: 24px;
+            }
+            .parcial-form {
+                background-color: #D0F0F6;
+                padding: 4px;
+            }
+        </style>
+
+    </h:head>
+    <h:body style="height: 100%">
+        <p:panelGrid>
+            <f:facet name="header">
+                <p:panelGrid columns="2" columnClasses="logo-column, title-column">
+                    <p:graphicImage value="epidata.png"/>
+                    <h:panelGroup layout="block">
+                        <h1 style="text-align: left">FacEle - Servicio de facturaci&oacute;n electr&oacute;nica</h1>
+                        <h:outputText value="Versi&oacute;n: ${app.version}"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+            </f:facet>
+        </p:panelGrid>
+
+        <p:tabView id="tview_main">
+            
+            <ui:include src="resources/ezcomp/configTab.xhtml"/>
+            <ui:include src="resources/ezcomp/servicesTab.xhtml"/>
+            <ui:include src="resources/ezcomp/refTablesTab.xhtml"/>
+            <ui:include src="resources/ezcomp/refTablesXTab.xhtml"/>
+            <ui:include src="resources/ezcomp/businessTab.xhtml"/>
+            <ui:include src="resources/ezcomp/documentsTab.xhtml"/>
+                        
+        </p:tabView>
+    </h:body>
+</html>
